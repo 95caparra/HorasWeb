@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>Horas WEB</title>
+	<link rel="stylesheet" type="text/css"
+		href="resources/css/estilos_login.css"></link>
+</h:head>
+
+<h:body styleClass="login-body">
+<script type="text/javascript" src="resources/js/sha1.js"></script>
+	<div class="login-panel ui-fluid">
+		<div class="ui-g">
+			<div class="ui-g-12 logo-container">
+				<p:graphicImage name="images/login/login-logo.png"
+					style="width: 200px;" />
+			</div>
+			<h:form class="login-form" id="login_form">
+				<p:growl id="growl" showDetail="true" sticky="true" />
+				
+				<!-- Mensaje Session Expirada -->
+				<c:if test="#{param['response'] eq 3}">
+					<div class="mensaje_error">
+						<center>${mensaje.MENSAJE_SESION_CADUCADA}</center>
+					</div>
+				</c:if>
+				<!-- Mensaje Usuario Contraseña Incorrecta -->
+				<c:if test="#{param['response'] eq 1}">
+					<div class="mensaje_error">
+						<center>${mensaje.MENSAJE_USUARIO_CONTRASENA_INCORRECTO}
+						</center>
+					</div>
+				</c:if>
+				<!-- Mensaje Usuario sin permisos -->
+				<c:if test="#{param['response'] eq 2}">
+					<div class="mensaje_error">
+						<center>${mensaje.MENSAJE_USUARIO_NO_TIENE_PERMISOS}</center>
+					</div>
+				</c:if>
+				<!-- Mensaje Usuario sin permisos -->
+				<c:if test="#{param['response'] eq 4}">
+					<div class="mensaje_error">
+						<center>${mensaje.MENSAJE_USUARIO_NO_EXISTE}</center>
+					</div>
+				</c:if>
+				
+				
+				<div class="ui-g-12">					
+				
+					<p:inputText autocomplete="off" id="usuario" value="#{loginBean.usuario}"
+						required="true" placeholder="usuario"
+						requiredMessage="Por favor ingrese el usuario"></p:inputText>
+				</div>
+				
+				<div class="ui-g-12">
+				<p:password autocomplete="off" id="password" name= "password" value="#{loginBean.password}"
+						placeholder="clave" required="true"
+						requiredMessage="Por favor ingrese la clave"></p:password>
+				</div>
+				
+				<div class="ui-g-12 button-container">
+					<p:commandButton action="#{loginBean.doLogin}" value="Ingresar"
+						onclick="cifrar();"
+						style="width: 100%;padding: 8px;font-weight: bold"
+						update="@form,growl" >
+					</p:commandButton>
+				</div>
+			</h:form>
+		</div>
+	</div>
+
+	<script>
+		function cifrar(variable) {
+
+			var input_pass = document.getElementById("login_form:password");
+			console.log(input_pass);
+			input_pass.value = SHA1(input_pass.value);
+			console.log(input_pass.value);
+
+		}
+	</script>
+
+	<h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css"
+		library="poseidon-layout" />
+</h:body>
+
+</html>
