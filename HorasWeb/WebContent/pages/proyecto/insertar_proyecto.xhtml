@@ -1,0 +1,262 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<ui:define name="head">
+		<style type="text/css">
+.cars-datalist .text-column p:last-child {
+	color: #757575;
+}
+
+.cars-datalist .car-item {
+	padding: 8px 14px;
+}
+
+.cars-datalist .car-item img, .cars-datalist .car-item .car-details {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 14px;
+}
+
+.cars-datalist .car-item button {
+	float: right;
+}
+
+.cars-datalist ul {
+	margin: 0;
+	padding: 0;
+}
+
+.ui-car-display td:last-child {
+	font-weight: 700;
+}
+
+@media ( max-width :640px) {
+	.cars-datalist .text-column {
+		text-align: center;
+	}
+}
+</style>
+	</ui:define>
+
+	<ui:define name="title">Data</ui:define>
+
+	<ui:define name="viewname">Data</ui:define>
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="card card-w-title">
+					<h:form enctype="multipart/form-data">
+						<p:growl id="growl" showDetail="true" sticky="true" />
+						<p:growl id="msg" showDetail="true" escape="false" />
+						<p:panel>
+
+							<f:facet name="header">
+								<h:outputText value="Insertar Proyecto" />
+							</f:facet>
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Priorización Comite: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:inputText
+										value="#{proyectoBean.proyecto.priorizacioncomite}" />
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Nombre Solicitante: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:inputText value="#{proyectoBean.proyecto.nombresolicitante}" />
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Tipo Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:selectOneMenu id="tipoProyecto" required="true"
+										requiredMessage="Por favor ingrese el tipo de proyecto"
+										value="#{proyectoBean.selectedTipoProyecto}"
+										style="width:150px">
+										<f:selectItem itemLabel="Selecione..." itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems var="tp" value="#{proyectoBean.tiposProyecto}"
+											itemValue="#{tp.idTipoProyecto}" itemLabel="#{tp.detalle}" />
+										<p:message for="tipoProyecto" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Campaña: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:selectOneMenu id="campana" required="true"
+										requiredMessage="Por favor ingrese la campaña"
+										value="#{proyectoBean.selectedCampana}" style="width:150px">
+										<f:selectItem itemLabel="Selecione..." itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems var="c" value="#{proyectoBean.campanas}"
+											itemValue="#{c.idcampana}" itemLabel="#{c.detalle}" />
+										<p:message for="campana" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Linea de Negocio: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:selectOneMenu id="lineaNegocio" required="true"
+										requiredMessage="Por favor ingrese la linea de negocio"
+										value="#{proyectoBean.selectedLineaNegocio}"
+										style="width:150px">
+										<f:selectItem itemLabel="Selecione..." itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems var="l" value="#{proyectoBean.lineasNegocio}"
+											itemValue="#{l.idlineanegocio}" itemLabel="#{l.detalle}" />
+										<p:message for="lineaNegocio" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Nombre Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:inputText value="#{proyectoBean.proyecto.nombreproyecto}" />
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Detalle del Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:inputText value="#{proyectoBean.proyecto.detalleproyecto}" />
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Desarrollador: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:selectOneMenu id="desarrollador" required="true"
+										requiredMessage="Por favor ingrese el desarrollador"
+										value="#{proyectoBean.selectedDesarrollador}"
+										style="width:150px">
+										<f:selectItem itemLabel="Selecione..." itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems var="d" value="#{proyectoBean.desarrolladores}"
+											itemValue="#{d.iddesarrollador}" itemLabel="#{d.nombre}" />
+										<p:message for="desarrollador" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Estado Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:selectOneMenu id="estadoProyecto" required="true"
+										requiredMessage="Por favor ingrese el desarrollador"
+										value="#{proyectoBean.selectedEstadoProyecto}"
+										style="width:150px">
+										<f:selectItem itemLabel="Selecione..." itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems var="e" value="#{proyectoBean.estadosProyecto}"
+											itemValue="#{e.idestadoproyecto}" itemLabel="#{e.detalle}" />
+										<p:message for="estadoProyecto" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Fecha Inicio Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:calendar value="#{proyectoBean.fechaIni}" />
+								</p:column>
+							</p:row>
+							
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Fecha Fin Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:calendar value="#{proyectoBean.fechaFin}" />
+								</p:column>
+							</p:row>
+							
+							<br />
+							<br />
+
+							<p:commandButton value="Guardar"
+								action="#{proyectoBean.insertar}"
+								update="@form:growl, @form:msg" icon="ui-icon-disk" />
+
+						</p:panel>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

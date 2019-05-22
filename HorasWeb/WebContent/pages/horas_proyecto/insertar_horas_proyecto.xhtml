@@ -1,0 +1,156 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<ui:define name="head">
+		<style type="text/css">
+.cars-datalist .text-column p:last-child {
+	color: #757575;
+}
+
+.cars-datalist .car-item {
+	padding: 8px 14px;
+}
+
+.cars-datalist .car-item img, .cars-datalist .car-item .car-details {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 14px;
+}
+
+.cars-datalist .car-item button {
+	float: right;
+}
+
+.cars-datalist ul {
+	margin: 0;
+	padding: 0;
+}
+
+.ui-car-display td:last-child {
+	font-weight: 700;
+}
+
+@media ( max-width :640px) {
+	.cars-datalist .text-column {
+		text-align: center;
+	}
+}
+</style>
+	</ui:define>
+
+	<ui:define name="title">Data</ui:define>
+
+	<ui:define name="viewname">Data</ui:define>
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="card card-w-title">
+					<h:form enctype="multipart/form-data">
+						<p:growl id="growl" showDetail="true" sticky="true" />
+						<p:growl id="msg" showDetail="true" escape="false" />
+						<p:panel>
+
+							<f:facet name="header">
+								<h:outputText value="Insertar Horas Por Proyecto" />
+							</f:facet>
+							
+							<p:row>
+								<p:column>
+									<h:outputText value="Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:selectOneMenu id="proyecto" required="true"
+										requiredMessage="Por favor ingrese el proyecto"
+										value="#{horasProyectoBean.selectedProyecto}"
+										style="width:150px">
+										<f:selectItem itemLabel="Selecione..." itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems var="p" value="#{horasProyectoBean.proyectos}"
+											itemValue="#{p.idproyecto}" itemLabel="#{p.nombreproyecto}" />
+										<p:message for="proyecto" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Actividad : " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:inputText value="#{horasProyectoBean.horaProyecto.actividad}" />
+								</p:column>
+							</p:row>
+
+							<br />
+							<br />
+							
+							<p:row>
+								<p:column>
+									<h:outputText value="Fecha : " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:calendar value="#{horasProyectoBean.fechaReporte}" timeZone="GMT+2" pattern="yyyy-MM-dd"/>
+								</p:column>
+							</p:row>
+							
+							<br />
+							<br />
+							
+							<p:row>
+								<p:column>
+									<h:outputText value="Horas : " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:spinner value="#{horasProyectoBean.horaProyecto.horas}" />
+								</p:column>
+							</p:row>
+							
+							<br />
+							<br />
+
+							<p:row>
+								<p:column>
+									<h:outputText value="Estado Proyecto: " />
+								</p:column>
+								<br />
+								<p:column>
+									<p:selectOneMenu id="estadoProyecto" required="true"
+										requiredMessage="Por favor ingrese el desarrollador"
+										value="#{horasProyectoBean.selectedEstadoProyecto}"
+										style="width:150px">
+										<f:selectItem itemLabel="Selecione..." itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems var="e" value="#{horasProyectoBean.estadosProyecto}"
+											itemValue="#{e.idestadoproyecto}" itemLabel="#{e.detalle}" />
+										<p:message for="estadoProyecto" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							
+							<br />
+							<br />
+
+							<p:commandButton value="Guardar"
+								action="#{horasProyectoBean.insertar}"
+								update="@form:growl, @form:msg" icon="ui-icon-disk" />
+
+						</p:panel>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
